@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Music Player</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="main">
+      <div id="player">
+        <!-- <audio
+          id="audio"
+          src="./resources/lost-in-city-lights-145038.mp3"
+        ></audio> -->
+        <!-- <div id="demo"></div>
+        <button
+          
+        >
+          play
+        </button> -->
+        <div id="cover">
+          <img src="" alt="cover image" id="cover-img" />
+        </div>
+        <div id="title"></div>
+        <div id="artist"></div>
+        <div id="time">
+          <div id="current-time"></div>
+          <div id="duration"></div>
+        </div>
+        <div id="progress">
+          <progress id="progress-bar"></progress>
+          <input type="range" id="prog-range" max="100" min="0" />
+        </div>
+        <div id="controll-btns">
+          <button id="pre-btn">
+            <img src="./resources/Stop_and_play_fill-1.svg" alt="" /></button
+          ><button id="play-btn">
+            <img
+              src="./resources/Play_fill.svg"
+              alt=""
+              id="play-stop-btn-svg"
+            /></button
+          ><button id="next-btn">
+            <img src="./resources/Stop_and_play_fill.svg" alt="" />
+          </button>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>
