@@ -14,10 +14,6 @@ const musics = [
   }
 ];
 
-//handle playing mucis
-let currentMusicIndex = 0;
-let currentMusic;
-
 //new audio element
 const audio = new Audio();
 
@@ -36,6 +32,12 @@ const playBtn = gebi("play-btn");
 const preBtn = gebi("pre-btn");
 const nextBtn = gebi("next-btn");
 const progRange = gebi("prog-range");
+
+//handle playing mucis
+let currentMusicIndex = 0;
+let currentMusic = musics[0];
+
+displayInfo(currentMusic);
 
 //event listenner for buttons
 playBtn.addEventListener("click", () => {
