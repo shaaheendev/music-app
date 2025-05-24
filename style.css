@@ -8,6 +8,7 @@
 .main {
   width: 100%;
   height: fit-content;
+  min-height: 100vh;
   background-color: red;
   background-image: url("./resources/gradient-bg.jpg");
   display: flex;
@@ -22,7 +23,6 @@
 #player {
   width: 300px;
   height: fit-content;
-  min-height:100vh;
   background-color: var(--black);
   display: flex;
   flex-direction: column;
