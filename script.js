@@ -37,6 +37,8 @@ const preBtn = gebi("pre-btn");
 const nextBtn = gebi("next-btn");
 const progRange = gebi("prog-range");
 
+// function manage() {}
+
 displayInfo(currentMusic);
 
 //event listenner for buttons
@@ -84,11 +86,6 @@ function displayInfo(music) {
 }
 
 function formatTime(seconds) {
-  // Ensure the input is a non-negative number
-  if (seconds < 0) {
-    throw new Error("Time cannot be negative");
-  }
-
   // Calculate hours, minutes, and remaining seconds
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
@@ -107,28 +104,18 @@ function formatTime(seconds) {
 function changeMusic(preOrNext) {
   //1 indicates the next music and -1 the previous one
   if (preOrNext === 1) {
-    if (currentMusicIndex === musics.length - 1) {
-      currentMusicIndex = 0;
-      currentMusic = musics[currentMusicIndex];
-      displayInfo(currentMusic);
-      audio.play();
-    } else {
-      currentMusicIndex++;
-      currentMusic = musics[currentMusicIndex];
-      displayInfo(currentMusic);
-      audio.play();
-    }
+    currentMusicIndex === musics.length - 1
+      ? (currentMusicIndex = 0)
+      : currentMusicIndex++;
+    currentMusic = musics[currentMusicIndex];
+    displayInfo(currentMusic);
+    audio.play();
   } else if (preOrNext === -1) {
-    if (currentMusicIndex === 0) {
-      currentMusicIndex = musics.length - 1;
-      currentMusic = musics[currentMusicIndex];
-      displayInfo(currentMusic);
-      audio.play();
-    } else {
-      currentMusicIndex--;
-      currentMusic = musics[currentMusicIndex];
-      displayInfo(currentMusic);
-      audio.play();
-    }
+    currentMusicIndex === 0
+      ? (currentMusicIndex = musics.length - 1)
+      : currentMusicIndex--;
+    currentMusic = musics[currentMusicIndex];
+    displayInfo(currentMusic);
+    audio.play();
   }
 }
