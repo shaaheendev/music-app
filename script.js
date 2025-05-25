@@ -1,22 +1,17 @@
 //load musics
-const musics = [
-  {
-    name: "Lost in the City Lights",
-    artist: "Cosmo Sheldrake",
-    src: "./resources/lost-in-city-lights-145038.mp3",
-    coverSrc: "./resources/cover-1.jpg",
-  },
-  {
-    name: "Forest Lullaby",
-    artist: "Lesfm",
-    src: "./resources/forest-lullaby-110624.mp3",
-    coverSrc: "./resources/cover-2.jpg",
-  },
-];
+let musics;
+fetch("/musics.json")
+  .then((res) => res.json())
+  .then((data) => {
+    musics = data;
+    currentMusic = musics[currentMusicIndex];
+    displayInfo(currentMusic);
+  })
+  .catch((err) => console.error(err));
 
 //handle playing mucis
 let currentMusicIndex = 0;
-let currentMusic = musics[currentMusicIndex];
+let currentMusic;
 
 //new audio element
 const audio = new Audio();
@@ -36,10 +31,6 @@ const playBtn = gebi("play-btn");
 const preBtn = gebi("pre-btn");
 const nextBtn = gebi("next-btn");
 const progRange = gebi("prog-range");
-
-//disply music info
-
-displayInfo(currentMusic);
 
 //event listenner for buttons
 playBtn.addEventListener("click", () => {
