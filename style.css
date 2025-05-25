@@ -8,6 +8,7 @@
 .main {
   width: 100%;
   height: fit-content;
+  min-height: 100vh;
   background-color: red;
   background-image: url("./resources/gradient-bg.jpg");
   display: flex;
@@ -61,7 +62,6 @@
 #progress-bar {
   width: 100%;
   height: 5px;
-  /* background-color: #c93b76; */
   border-radius: 50%;
 }
 
@@ -76,29 +76,6 @@ input[type="range"] {
   top: -16px;
   opacity: 0;
 }
-/* input[type="range"]::-webkit-slider-runnable-track {
-  height: 5px;
-} */
-/* input[type="range"]::-moz-range-track {
-  background: #ddd; 
-  border-radius: 5px; 
-} */
-/* input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  background: #4caf50;
-  border-radius: 50%;
-  cursor: pointer; */
-/* } */
-/* input[type="range"]::-moz-range-thumb {
-  width: 20px; 
-  height: 20px;
-  background: #4caf50; 
-  border-radius: 50%; 
-  cursor: pointer; 
-} */
 
 ::-webkit-progress-value {
   background-color: var(--pink);
@@ -106,18 +83,25 @@ input[type="range"] {
 #controll-btns {
   display: flex;
   justify-content: space-evenly;
+  align-items: center;
 
   width: 100%;
   margin-top: 25px;
 }
 #controll-btns > button {
   width: fit-content;
+  height: fit-content;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   border: none;
   background-color: var(--black);
+}
+#controll-btns > button:hover {
+  /* outline: 1px solid #4d5562; */
+  box-shadow: 0 0 2px 1px #4d5562;
+  transition: 0.2s;
 }
 #play-stop-btn-svg {
   background-color: var(--pink);
