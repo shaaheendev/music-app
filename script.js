@@ -14,9 +14,9 @@ const musics = [
   },
 ];
 
-//handle playing mucis
+//handle playing music
 let currentMusicIndex = 0;
-let currentMusic = musics[currentMusicIndex];
+// let currentMusic = musics[currentMusicIndex];
 
 //new audio element
 const audio = new Audio();
@@ -25,34 +25,29 @@ const audio = new Audio();
 const gebi = (id) => document.getElementById(id);
 
 //get the elements
-const cover = gebi("cover");
-const coverImg = gebi("cover-img");
-const title = gebi("title");
-const artist = gebi("artist");
-const crntTime = gebi("current-time");
-const duration = gebi("duration");
-const progress = gebi("progress-bar");
-const playBtn = gebi("play-btn");
-const preBtn = gebi("pre-btn");
-const nextBtn = gebi("next-btn");
-const progRange = gebi("prog-range");
+const elements = {
+  coverImg: gebi("cover-img"),
+  title: gebi("title"),
+  artist: gebi("artist"),
+  crntTime: gebi("current-time"),
+  duration: gebi("duration"),
+  progress: gebi("progress-bar"),
+  playBtn: gebi("play-btn"),
+  preBtn: gebi("pre-btn"),
+  nextBtn: gebi("next-btn"),
+  progRange: gebi("prog-range"),
+};
 
-// function manage() {}
-
-displayInfo(currentMusic);
+displayInfo(currentMusicIndex);
 
 //event listenner for buttons
-playBtn.addEventListener("click", () => {
-  if (audio.paused) {
-    audio.play();
-  } else {
-    audio.pause();
-  }
+elements.playBtn.addEventListener("click", () => {
+  audio.paused ? audio.play() : audio.pause();
 });
-nextBtn.addEventListener("click", function () {
+elements.nextBtn.addEventListener("click", function () {
   changeMusic(1);
 });
-preBtn.addEventListener("click", function () {
+elements.preBtn.addEventListener("click", function () {
   changeMusic(-1);
 });
 //event listenner for music end
@@ -61,61 +56,46 @@ audio.addEventListener("ended", () => {
 });
 
 //handle progress and time nav
-progress.setAttribute("max", "100");
-audio.addEventListener("loadeddata", () => {
-  duration.innerText = formatTime(audio.duration);
-  audio.addEventListener("timeupdate", () => {
-    progress.setAttribute(
+audio.addEventListener("loadeddata", function () {
+  elements.duration.innerText = formatTime(this.duration);
+  this.addEventListener("timeupdate", () => {
+    elements.progress.setAttribute(
       "value",
-      `${(audio.currentTime / audio.duration) * 100}`
+      `${(this.currentTime / this.duration) * 100}`
     );
-
-    crntTime.innerText = formatTime(audio.currentTime);
+    elements.crntTime.innerText = formatTime(this.currentTime);
   });
-  progRange.addEventListener("change", function () {
-    progress.value = this.value;
+  elements.progRange.addEventListener("change", function () {
+    elements.progress.value = this.value;
     audio.currentTime = Math.round((this.value / 100) * audio.duration);
   });
 });
 
-function displayInfo(music) {
-  coverImg.src = music.coverSrc;
-  title.innerText = music.name;
-  artist.innerText = music.artist;
+function displayInfo(musicIndex) {
+  let music = musics[musicIndex];
+  elements.coverImg.src = music.coverSrc;
+  elements.title.innerText = music.name;
+  elements.artist.innerText = music.artist;
   audio.src = music.src;
 }
 
 function formatTime(seconds) {
   // Calculate hours, minutes, and remaining seconds
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-  const secs = Math.floor(seconds % 60);
+  let hours = Math.floor(seconds / 3600),
+    minutes = Math.floor((seconds % 3600) / 60),
+    secs = Math.floor(seconds % 60);
 
   // Pad the numbers with leading zeros if necessary
-  const formattedTime = [
-    String(hours).padStart(2, "0"),
-    String(minutes).padStart(2, "0"),
-    String(secs).padStart(2, "0"),
-  ].join(":");
+  const formattedTime = `${String(hours).padStart(2, "0")}:${String(
+    minutes
+  ).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
 
   return formattedTime;
 }
 //function for changing the music
 function changeMusic(preOrNext) {
-  //1 indicates the next music and -1 the previous one
-  if (preOrNext === 1) {
-    currentMusicIndex === musics.length - 1
-      ? (currentMusicIndex = 0)
-      : currentMusicIndex++;
-    currentMusic = musics[currentMusicIndex];
-    displayInfo(currentMusic);
-    audio.play();
-  } else if (preOrNext === -1) {
-    currentMusicIndex === 0
-      ? (currentMusicIndex = musics.length - 1)
-      : currentMusicIndex--;
-    currentMusic = musics[currentMusicIndex];
-    displayInfo(currentMusic);
-    audio.play();
-  }
+  currentMusicIndex =
+    (musics.length + preOrNext + currentMusicIndex) % musics.length;
+  displayInfo(currentMusicIndex);
+  audio.play();
 }
